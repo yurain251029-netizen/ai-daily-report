@@ -703,3 +703,125 @@ html {
     transition-duration: 0.3s;
   }
 }
+
+/* ==========================================================
+   Footer 增强版（2026-06-13 扩展：声明 + 联系方式）
+   ========================================================== */
+.footer-statement {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-line);
+}
+
+.footer-brand {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.footer-desc {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.5px;
+}
+
+.footer-legal {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-line);
+}
+
+.footer-warn {
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.8;
+  font-family: var(--font-serif);
+  font-style: normal;
+  background: rgba(193, 69, 69, 0.05);
+  border-left: 2px solid var(--color-accent);
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+.footer-warn strong {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.footer-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-line);
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  padding: 4px 10px;
+  border-radius: 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-item:hover {
+  background: var(--bg-soft);
+  color: var(--color-primary);
+}
+
+.contact-icon {
+  font-size: 14px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.footer-tech {
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.8;
+}
+
+.footer-tech .footer-line {
+  margin-bottom: 4px;
+}
+
+.footer-copy {
+  font-size: 11px;
+}
+
+.footer-copy a {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--color-primary);
+}
+
+.footer-copy a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.footer-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* 移动端 footer 优化 */
+@media (max-width: 600px) {
+  .footer-contact { gap: 4px; }
+  .contact-item { font-size: 12px; padding: 3px 8px; }
+  .footer-warn { font-size: 11px; padding: 8px 12px; }
+}

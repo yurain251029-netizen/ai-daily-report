@@ -30,9 +30,9 @@
     const now = new Date();
     const hour = now.getHours();
     const metas = {
-      morning: { readyAfter: 8,  label: '🌅 晨报 · 08:00' },
-      noon:    { readyAfter: 12, label: '☀️ 午报 · 12:00' },
-      evening: { readyAfter: 20, label: '🌙 晚报 · 20:00' }
+      morning: { readyAfter: 8,  label: '晨报 · 08:00' },
+      noon:    { readyAfter: 12, label: '午报 · 12:00' },
+      evening: { readyAfter: 20, label: '晚报 · 20:00' }
     };
     const cards = document.querySelectorAll('[data-report]');
     cards.forEach(function (el) {
@@ -40,11 +40,13 @@
       const meta = metas[key];
       if (!meta) return;
       if (hour >= meta.readyAfter) {
-        el.textContent = '✅ ' + meta.label + ' · 已发布';
+        el.textContent = '✓ ' + meta.label + ' · 已发布';
         el.style.color = '#1a8f3c';
+        el.style.fontWeight = '600';
       } else {
-        el.textContent = '⏳ ' + meta.label + ' · 等待中';
+        el.textContent = '◷ ' + meta.label + ' · 等待中';
         el.style.color = '#9a8a73';
+        el.style.fontWeight = '500';
       }
     });
   }
