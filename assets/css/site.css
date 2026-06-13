@@ -580,7 +580,7 @@ section, header, footer {
 
 .hero-title.glitch-active::after {
   color: transparent;
-  text-shadow: -3px 0 #6c5ce7, 1px 0 #c8843a;
+  text-shadow: -3px 0 #8b6f47, 1px 0 #c8843a;
   animation: hero-glitch-after 0.4s steps(3) forwards;
   clip-path: inset(55% 0 0 0);
   opacity: 1;
@@ -615,14 +615,14 @@ section, header, footer {
     text-shadow: 4px 0 #d60000, -2px 0 #1a8f3c, 0 0 10px rgba(139, 111, 71, 0.4);
   }
   .hero-title.glitch-active::after {
-    text-shadow: -4px 0 #6c5ce7, 2px 0 #c8843a, 0 0 10px rgba(139, 111, 71, 0.4);
+    text-shadow: -4px 0 #8b6f47, 2px 0 #c8843a, 0 0 10px rgba(139, 111, 71, 0.4);
   }
 }
 
 /* 故障色：中等屏(601-1100px)中等 */
 @media (max-width: 1100px) and (min-width: 601px) {
   .hero-title.glitch-active::before { text-shadow: 2px 0 #d60000; }
-  .hero-title.glitch-active::after  { text-shadow: -2px 0 #6c5ce7; }
+  .hero-title.glitch-active::after  { text-shadow: -2px 0 #8b6f47; }
 }
 
 /* 故障色：小屏(≤600px)减弱 + 缩短时长 */
@@ -642,4 +642,64 @@ section, header, footer {
   .hero-title::after { display: none; }
   .hero-title.glitch-active { animation: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ==========================================================
+   滚动流畅性优化（2026-06-13 新增）
+   ========================================================== */
+
+/* 全局平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 进入视口淡入动画 */
+.section-head,
+.report-card,
+.about-item,
+.paper-footer .footer-line {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.section-head.visible,
+.report-card.visible,
+.about-item.visible,
+.paper-footer .footer-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 延迟淡入（交错效果） */
+.report-card:nth-child(2) { transition-delay: 0.1s; }
+.report-card:nth-child(3) { transition-delay: 0.2s; }
+.about-item:nth-child(2) { transition-delay: 0.1s; }
+.about-item:nth-child(3) { transition-delay: 0.2s; }
+.about-item:nth-child(4) { transition-delay: 0.3s; }
+
+/* GPU 加速优化 */
+.hero-title,
+.report-card,
+.btn-primary,
+.btn-ghost {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* 性能优化：减少重绘 */
+.bg-layer,
+.bg-noise {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 移动端优化：减少动画 */
+@media (max-width: 600px) {
+  .section-head,
+  .report-card,
+  .about-item {
+    transition-duration: 0.3s;
+  }
 }

@@ -55,6 +55,7 @@
     updateReportStatus();
     setInterval(updateDate, 60 * 1000);
     initGlitch();
+    initScrollReveal();
   }
 
   /* ---------- 3. Hero 标题故障动画（hover 触发） ---------- */
@@ -76,6 +77,31 @@
     }, { passive: true });
     heroTitle.addEventListener('animationend', function () {
       heroTitle.classList.remove('glitch-active');
+    });
+  }
+
+  /* ========== 4. 滚动淡入动画（Intersection Observer）========== */
+  function initScrollReveal() {
+    const targets = document.querySelectorAll(
+      '.section-head, .report-card, .about-item, .paper-footer .footer-line'
+    );
+    
+    if (!targets.length) return;
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // 只触发一次
+        }
+      });
+    }, {
+      threshold: 0.1, /* 10% 可见时触发 */
+      rootMargin: '0px 0px -50px 0px' /* 提前 50px 触发 */
+    });
+
+    targets.forEach(function (el) {
+      observer.observe(el);
     });
   }
 
