@@ -70,6 +70,11 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
 .current-report-bar .crb-history{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:#8b6f47;color:#fff;font-size:12px;font-weight:600;border-radius:8px;text-decoration:none;transition:background 0.2s}
 .current-report-bar .crb-history:hover{background:#6f5838}
 
+/* 页面导航条（返回主页 + 查看历史） */
+.page-nav{display:flex;justify-content:space-between;align-items:center;background:#fff;border:0.5px solid #ede4d3;border-radius:10px;padding:8px 14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(139,111,71,0.04)}
+.page-nav a{font-size:12px;color:#8b6f47;text-decoration:none;padding:4px 10px;border-radius:6px;transition:background 0.15s,color 0.15s}
+.page-nav a:hover{background:#f3eee5;color:#6f5838}
+
 /* tips-top 容器 */
 .read-tips .tips-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .read-tips .tips-close{font-size:18px;color:#fff;cursor:pointer;background:#8b6f47;border:none;padding:2px 8px;line-height:1;border-radius:6px;font-weight:700;transition:background 0.15s, transform 0.15s}
@@ -229,9 +234,15 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
       <span class="crb-pulse">●</span>
       <span class="crb-label">当前报告</span>
       <span class="crb-type">🌙 晚报</span>
-      <span class="crb-time">生成时间 · 2026-06-13 20:19</span>
+      <span class="crb-time">生成时间 · 2026-06-13 20:33</span>
     </div>
-    <a href="history.html" class="crb-history">查看历史 ↗</a>
+    <a href="../history.html" class="crb-history">查看历史 ↗</a>
+  </div>
+
+  <!-- 页面导航条（归档页/历史页用于快速回主页） -->
+  <div class="page-nav">
+    <a href="../index.html" class="page-nav-home">← 返回主页</a>
+    <a href="../history.html" class="page-nav-history">查看历史 ↗</a>
   </div>
 
   <!-- HEADER -->

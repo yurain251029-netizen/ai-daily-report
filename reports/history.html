@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 历史报告 — AI × 经济日报</title>
 <meta name="description" content="AI × 经济日报历史归档，按日期倒序展示所有历史报告">
-<link rel="canonical" href="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
-<link rel="alternate" hreflang="zh-CN" href="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
+<link rel="canonical" href="https://yurain251029-netizen.github.io/daily/history.html">
+<link rel="alternate" hreflang="zh-CN" href="https://yurain251029-netizen.github.io/daily/history.html">
 
 <!-- Open Graph（社交分享卡片） -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI × 经济日报">
 <meta property="og:title" content="📚 历史报告 — AI × 经济日报">
 <meta property="og:description" content="按日期倒序展示所有历史报告（晨 / 午 / 晚三报）">
-<meta property="og:url" content="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
+<meta property="og:url" content="https://yurain251029-netizen.github.io/daily/history.html">
 
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
@@ -492,6 +492,37 @@
         group.style.display=visible>0?'':'none';
       });
     });
+  });
+})();
+</script>
+
+<script>
+/* ========== 路径自适配（兼容 site/history.html 和 site/reports/history.html） ==========
+ * 文件位置两种：
+ *  - site/history.html           （根层，access url: /history.html）
+ *  - site/reports/history.html   （reports 层，access url: /reports/history.html）
+ *
+ * 数据实际存放：
+ *  - index.html    → site/reports/index.html
+ *  - archive/*     → site/reports/archive/*
+ *
+ * 因此：根层 history.html 需跳到 reports/；reports 层 history.html 需 ../。
+ */
+(function(){
+  const path = location.pathname.replace(/\\/g, '/');
+  const inReports = path.indexOf('/reports/') >= 0;
+  // 根层：跳 reports/；reports 层：跳 ../
+  const arcPrefix = inReports ? 'archive/' : 'reports/archive/';
+  const homeHref  = inReports ? 'index.html' : 'reports/index.html';
+
+  document.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute('href');
+    if (!h || h.startsWith('http') || h.startsWith('#') || h.startsWith('mailto:')) return;
+    if (h === 'index.html') { a.setAttribute('href', homeHref); return; }
+    if (h === 'reports/index.html') { a.setAttribute('href', homeHref); return; }
+    if (h.startsWith('archive/')) {
+      a.setAttribute('href', arcPrefix + h.slice('archive/'.length));
+    }
   });
 })();
 </script>
