@@ -508,6 +508,7 @@ section, header, footer {
   border-radius: 4px;
   padding: 24px 18px;
   text-align: center;
+  contain: layout style;
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
 }
 
@@ -516,6 +517,7 @@ section, header, footer {
   border-color: var(--color-primary);
   transform: translateY(-1px);
   box-shadow: var(--shadow-warm);
+  will-change: transform;
 }
 
 .about-num {

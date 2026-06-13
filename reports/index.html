@@ -132,14 +132,8 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
 .sentiment-score{font-size:16px;font-weight:700;color:#8b6f47;min-width:36px;text-align:right;font-family:'Source Han Serif SC','Songti SC',serif}
 .sentiment-word{font-size:12px;color:#8b6f47;font-weight:500;min-width:44px;text-align:left}
 
-/* 新闻卡片优化 v2 - 去 will-change + 加 contain 彻底消除文字重排 */
 .news-card{border-left:3px solid #ccc;background:#fff;padding:12px 14px;border-radius:0 10px 10px 0;margin-bottom:10px;contain:layout style;transition:background 0.25s ease, border-left-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease}
 .news-card:hover{background:#faf6ed;border-left-color:#8b6f47;box-shadow:0 1px 6px rgba(139,111,71,0.06);transform:translateX(2px);will-change:transform}
-
-/* 新闻卡片优化：去掉渐变，改用实心色 + 具体属性过渡 */
-/* 关键：padding-left 不再变（避免文字换行点变化导致"排版割裂"），hover 改用 transform 轻推 */
-.news-card{border-left:3px solid #ccc;background:#fff;padding:12px 14px;border-radius:0 10px 10px 0;margin-bottom:10px;transition:background 0.25s ease, border-left-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;will-change:transform}
-.news-card:hover{background:#faf6ed;border-left-color:#8b6f47;box-shadow:0 1px 6px rgba(139,111,71,0.06);transform:translateX(2px)}
 .news-card.important{border-left-color:#c14545;background:#fdf6f4}
 .news-card.watch{border-left-color:#c8843a;background:#faf3eb}
 .news-card.quick{border-left-color:#ccc}
@@ -235,9 +229,9 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
       <span class="crb-pulse">●</span>
       <span class="crb-label">当前报告</span>
       <span class="crb-type">☀️ 午报</span>
-      <span class="crb-time">生成时间 · 2026-06-13 18:49</span>
+      <span class="crb-time">生成时间 · 2026-06-13 19:19</span>
     </div>
-    <a href="../history.html" class="crb-history">查看历史 ↗</a>
+    <a href="history.html" class="crb-history">查看历史 ↗</a>
   </div>
 
   <!-- HEADER -->
@@ -261,18 +255,18 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
   </div>
   <div class="tips-quick">
     <span class="tip-chip">🔴 涨红跌绿</span>
-    <span class="tip-chip">&lt;strong&gt;必知&lt;/strong&gt;看左侧红条</span>
+    <span class="tip-chip"><strong>必知</strong>看左侧红条</span>
     <span class="tip-chip">📊 图表滚动加载</span>
     <span class="tip-chip">⏰ 上午盘总结 + 下午前瞻</span>
   </div>
   <div class="read-tips-detail">
-    · &lt;strong&gt;必知（红）&lt;/strong&gt;：3 条上午盘核心事件，看完心里有数<br>
-    · &lt;strong&gt;关注（橙）&lt;/strong&gt;：6-8 条值得跟踪的市场动态<br>
-    · &lt;strong&gt;速览（灰）&lt;/strong&gt;：8-10 条一分钟读懂<br>
-    · &lt;strong&gt;涨跌色&lt;/strong&gt;：中国惯例，涨=红、跌=绿（与国际市场相反）<br>
-    · &lt;strong&gt;术语&lt;/strong&gt;：虚线下划线=术语，悬停查看小白注释<br>
-    · &lt;strong&gt;图表&lt;/strong&gt;：滚动到附近自动渲染，悬停查看具体数值<br>
-    · &lt;strong&gt;午报特定&lt;/strong&gt;：聚焦上午盘总结 + 美股盘前<br>
+    · <strong>必知（红）</strong>：3 条上午盘核心事件，看完心里有数<br>
+    · <strong>关注（橙）</strong>：6-8 条值得跟踪的市场动态<br>
+    · <strong>速览（灰）</strong>：8-10 条一分钟读懂<br>
+    · <strong>涨跌色</strong>：中国惯例，涨=红、跌=绿（与国际市场相反）<br>
+    · <strong>术语</strong>：虚线下划线=术语，悬停查看小白注释<br>
+    · <strong>图表</strong>：滚动到附近自动渲染，悬停查看具体数值<br>
+    · <strong>午报特定</strong>：聚焦上午盘总结 + 美股盘前<br>
   </div>
 </div>
 
@@ -398,7 +392,13 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
   <div class="news-sources"><a href="https://techcrunch.com" target="_blank" rel="noopener">TechCrunch ↗</a></div>
   
 </div>
-    
+    <div class="chart-wrap" id="aiChartWrap">
+  <div class="chart-title">AI 龙头股近 7 日走势对比（收盘价）</div>
+  <canvas id="aiChart"></canvas>
+</div>
+<script>
+window.__CHART_DATA__={"title": "AI 龙头股近 7 日走势对比（收盘价）", "labels": ["06-07", "06-08", "06-09", "06-10", "06-11", "06-12", "06-13"], "datasets": [{"label": "英伟达 NVDA", "data": [138.2, 142.5, 145.8, 143.1, 148.6, 151.2, 154.7], "color": "#76b900", "fill": false}, {"label": "微软 MSFT", "data": [445.1, 448.6, 452.3, 449.7, 456.2, 461.5, 465.8], "color": "#00a4ef", "fill": false}, {"label": "中际旭创 300308", "data": [128.5, 132.1, 135.4, 138.9, 142.6, 145.3, 148.7], "color": "#d60000", "fill": true}]};
+</script>
   </div>
 
   <!-- 经济 & 金融 -->
@@ -438,7 +438,56 @@ h1,h2,h3,.header-title,.section-title,.tips-title,.date-stamp,.paper-footer{font
   <div class="news-sources"><a href="https://cnbc.com" target="_blank" rel="noopener">CNBC ↗</a></div>
   
 </div>
-    
+    <div class="heatmap">
+<div class="heat-cell heat-up">
+  <div class="heat-name">AI 算力</div>
+  <div class="heat-change up">+4.8%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:82%;background:#d60000"></div></div>
+  <div class="heat-dir">强势领涨</div>
+</div>
+<div class="heat-cell heat-up">
+  <div class="heat-name">CPO/光模块</div>
+  <div class="heat-change up">+3.6%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:72%;background:#d60000"></div></div>
+  <div class="heat-dir">高景气持续</div>
+</div>
+<div class="heat-cell heat-up">
+  <div class="heat-name">新能源汽车</div>
+  <div class="heat-change up">+1.9%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:58%;background:#d60000"></div></div>
+  <div class="heat-dir">温和上涨</div>
+</div>
+<div class="heat-cell heat-up">
+  <div class="heat-name">半导体</div>
+  <div class="heat-change up">+0.7%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:52%;background:#d60000"></div></div>
+  <div class="heat-dir">震荡偏多</div>
+</div>
+<div class="heat-cell heat-down">
+  <div class="heat-name">银行</div>
+  <div class="heat-change down">-0.4%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:45%;background:#1a8f3c"></div></div>
+  <div class="heat-dir">小幅承压</div>
+</div>
+<div class="heat-cell heat-down">
+  <div class="heat-name">房地产</div>
+  <div class="heat-change down">-1.2%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:38%;background:#1a8f3c"></div></div>
+  <div class="heat-dir">持续走弱</div>
+</div>
+<div class="heat-cell heat-up">
+  <div class="heat-name">医药生物</div>
+  <div class="heat-change up">+0.3%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:50%;background:#d60000"></div></div>
+  <div class="heat-dir">横盘整理</div>
+</div>
+<div class="heat-cell heat-down">
+  <div class="heat-name">白酒</div>
+  <div class="heat-change down">-0.8%</div>
+  <div class="heat-progress"><div class="heat-bar" style="width:42%;background:#1a8f3c"></div></div>
+  <div class="heat-dir">估值消化</div>
+</div>
+</div>
   </div>
 
   <!-- 深度分析 -->
@@ -543,14 +592,18 @@ function toggleDetail(btn){
     if(card)card.classList.remove('expanded');
   }else{
     d.classList.add('show');
-    const h=d.scrollHeight;
-    d.style.maxHeight='0';
-    d.style.opacity='0';
-    d.style.transform='translateY(-4px)';
+    // 关键修复：scrollHeight 在 max-height:0 状态下被裁剪可能返回 0
+    // 先临时取消 max-height 限制测真实高度，再还原
+    const prevMax = d.style.maxHeight;
+    d.style.maxHeight = 'none';
+    const h = d.scrollHeight;
+    d.style.maxHeight = prevMax || '0';
+    d.style.opacity = '0';
+    d.style.transform = 'translateY(-4px)';
     requestAnimationFrame(()=>{
-      d.style.maxHeight=h+'px';
-      d.style.opacity='1';
-      d.style.transform='translateY(0)';
+      d.style.maxHeight = h + 'px';
+      d.style.opacity = '1';
+      d.style.transform = 'translateY(0)';
     });
     d.addEventListener('transitionend',function showEnd(){
       d.style.maxHeight='none';

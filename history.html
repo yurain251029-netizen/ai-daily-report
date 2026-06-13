@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 历史报告 — AI × 经济日报</title>
 <meta name="description" content="AI × 经济日报历史归档，按日期倒序展示所有历史报告">
+<link rel="canonical" href="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
+<link rel="alternate" hreflang="zh-CN" href="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
+
+<!-- Open Graph（社交分享卡片） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI × 经济日报">
+<meta property="og:title" content="📚 历史报告 — AI × 经济日报">
+<meta property="og:description" content="按日期倒序展示所有历史报告（晨 / 午 / 晚三报）">
+<meta property="og:url" content="https://yurain251029-netizen.github.io/ai-daily-report/history.html">
+
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
 /* ========== history.html 专用样式（继承 site.css） ========== */
@@ -299,23 +309,27 @@
 </head>
 <body>
 
+<a class="skip-link" href="#historyList">跳到报告列表</a>
+
 <!-- 装饰层 -->
 <div class="bg-layer"></div>
 <div class="bg-noise"></div>
 
 <!-- 顶部品牌栏（与主页一致） -->
-<header class="site-header">
+<header class="site-header" role="banner">
   <div class="header-inner">
     <div class="brand">
-      <div class="brand-mark">AI<span class="mark-x">×</span>经济</div>
-      <div class="brand-sub">HISTORY · ARCHIVE</div>
+      <div class="brand-mark" aria-label="AI 乘以 经济">AI<span class="mark-x" aria-hidden="true">×</span>经济</div>
+      <div class="brand-sub" aria-hidden="true">HISTORY · ARCHIVE</div>
     </div>
-    <div class="date-stamp" id="dateStamp">📅 加载中...</div>
+    <div class="date-stamp" id="dateStamp" aria-label="当前日期">
+      <span class="sr-only">今天是 </span>📅 加载中...
+    </div>
   </div>
 </header>
 
 <!-- 主体内容 -->
-<div class="history-container">
+<main class="history-container" id="historyContainer">
 
   <!-- 页面导航 -->
   <div class="page-nav">
@@ -324,51 +338,51 @@
   </div>
 
   <!-- 统计卡 -->
-  <div class="stats-bar" id="statsBar">
+  <div class="stats-bar" id="statsBar" aria-label="历史报告统计">
     <div class="stat-card">
-      <div class="stat-num" id="statTotal">--</div>
+      <div class="stat-num" id="statTotal" aria-live="polite">--</div>
       <div class="stat-label">报告总数</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" id="statMorning">--</div>
-      <div class="stat-label">🌅 晨报</div>
+      <div class="stat-num" id="statMorning" aria-live="polite">--</div>
+      <div class="stat-label" aria-hidden="true">🌅 晨报</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" id="statNoon">--</div>
-      <div class="stat-label">☀️ 午报</div>
+      <div class="stat-num" id="statNoon" aria-live="polite">--</div>
+      <div class="stat-label" aria-hidden="true">☀️ 午报</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num" id="statEvening">--</div>
-      <div class="stat-label">🌙 晚报</div>
+      <div class="stat-num" id="statEvening" aria-live="polite">--</div>
+      <div class="stat-label" aria-hidden="true">🌙 晚报</div>
     </div>
   </div>
 
   <!-- 分类筛选 -->
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-filter="all">全部</button>
-    <button class="filter-btn" data-filter="morning">🌅 晨报</button>
-    <button class="filter-btn" data-filter="noon">☀️ 午报</button>
-    <button class="filter-btn" data-filter="evening">🌙 晚报</button>
+  <div class="filter-bar" id="filterBar" role="group" aria-label="按报告类型筛选">
+    <button class="filter-btn active" data-filter="all" aria-pressed="true">全部</button>
+    <button class="filter-btn" data-filter="morning" aria-pressed="false">🌅 晨报</button>
+    <button class="filter-btn" data-filter="noon" aria-pressed="false">☀️ 午报</button>
+    <button class="filter-btn" data-filter="evening" aria-pressed="false">🌙 晚报</button>
   </div>
 
   <!-- 历史报告列表 -->
-  <div id="historyList">
+  <div id="historyList" role="list" aria-live="polite">
 
     <div class="date-group" data-date="2026-06-13" data-weekday="6">
       <div class="date-header">
         <span>📅 2026-06-13（周六）</span>
         <span class="date-count">2 份报告</span>
       </div>
-      <div class="report-item" data-type="noon">
-        <div class="report-icon icon-noon">☀️</div>
+      <div class="report-item" data-type="noon" role="listitem">
+        <div class="report-icon icon-noon" aria-hidden="true">☀️</div>
         <div class="report-info">
           <span class="report-type">午报</span><span class="report-time">12:00</span>
           <div class="report-summary">沪指站上 4000 点 + 3.23 万亿天量｜SpaceX 上市市值破 2.1 万亿｜华为 HarmonyOS 7 Beta 启动</div>
         </div>
         <a href="archive/2026-06-13-noon.html" class="report-link">查看 ↗</a>
       </div>
-      <div class="report-item" data-type="morning">
-        <div class="report-icon icon-morning">🌅</div>
+      <div class="report-item" data-type="morning" role="listitem">
+        <div class="report-icon icon-morning" aria-hidden="true">🌅</div>
         <div class="report-info">
           <span class="report-type">晨报</span><span class="report-time">08:00</span>
           <div class="report-summary">美股芯片股史诗暴涨｜Claude Fable 5 屠榜｜英伟达 RTX Spark 落地……</div>
@@ -382,8 +396,8 @@
         <span>📅 2026-06-12（周五）</span>
         <span class="date-count">1 份报告</span>
       </div>
-      <div class="report-item" data-type="evening">
-        <div class="report-icon icon-evening">🌙</div>
+      <div class="report-item" data-type="evening" role="listitem">
+        <div class="report-icon icon-evening" aria-hidden="true">🌙</div>
         <div class="report-info">
           <span class="report-type">晚报</span><span class="report-time">20:00</span>
           <div class="report-summary">SpaceX 史上最大 IPO 今日登场｜AI 双雄竞速上市｜A 股放量突破 4000 点成交 3.21 万亿</div>
@@ -397,7 +411,7 @@
 </div>
 
 <!-- Footer（与主页一致） -->
-<footer class="paper-footer">
+<footer class="paper-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-line">📖 AI × 经济日报 · 历史归档（按日期倒序）</div>
     <div class="footer-line footer-warn">⚠️ 本站内容仅供学习研究，不构成任何投资建议。市场有风险，决策需谨慎。</div>
@@ -410,26 +424,29 @@
     </div>
   </div>
 </footer>
+</main>
 
 <script>
-/* ========== 1. 日期印章（继承主页逻辑） ========== */
+/* ========== 1. 日期印章（UTC+8 校正 P3-2） ========== */
 (function(){
   function updateDate(){
-    const now=new Date();
-    const y=now.getFullYear();
-    const m=String(now.getMonth()+1).padStart(2,'0');
-    const d=String(now.getDate()).padStart(2,'0');
-    const weekdays=['日','一','二','三','四','五','六'];
-    const wk=weekdays[now.getDay()];
-    const hh=String(now.getHours()).padStart(2,'0');
-    const mm=String(now.getMinutes()).padStart(2,'0');
-    const s=document.getElementById('dateStamp');
-    if(s) s.textContent='📅 '+y+'-'+m+'-'+d+' · 星期'+wk;
-    const ft=document.getElementById('footerTime');
-    if(ft) ft.textContent='最近更新：'+y+'-'+m+'-'+d+' '+hh+':'+mm;
+    const now = new Date();
+    const beijingMs = now.getTime() + (now.getTimezoneOffset() + 8 * 60) * 60 * 1000;
+    const beijing = new Date(beijingMs);
+    const y = beijing.getUTCFullYear();
+    const m = String(beijing.getUTCMonth() + 1).padStart(2, '0');
+    const d = String(beijing.getUTCDate()).padStart(2, '0');
+    const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+    const wk = weekdays[beijing.getUTCDay()];
+    const hh = String(beijing.getUTCHours()).padStart(2, '0');
+    const mm = String(beijing.getUTCMinutes()).padStart(2, '0');
+    const s = document.getElementById('dateStamp');
+    if (s) s.textContent = '📅 ' + y + '-' + m + '-' + d + ' · 星期' + wk;
+    const ft = document.getElementById('footerTime');
+    if (ft) ft.textContent = '最近更新：' + y + '-' + m + '-' + d + ' ' + hh + ':' + mm;
   }
   updateDate();
-  setInterval(updateDate,60000);
+  setInterval(updateDate, 60000);
 })();
 
 /* ========== 2. 统计 + 筛选（history.html 专用） ========== */
@@ -452,12 +469,13 @@
   statNoon.textContent=noon;
   statEvening.textContent=evening;
 
-  /* 筛选逻辑 */
+  /* 筛选逻辑（同步 aria-pressed 状态，无障碍 P3-3）*/
   const filterBtns=document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn=>{
     btn.addEventListener('click',function(){
-      filterBtns.forEach(b=>b.classList.remove('active'));
+      filterBtns.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});
       this.classList.add('active');
+      this.setAttribute('aria-pressed','true');
       const filter=this.getAttribute('data-filter');
       document.querySelectorAll('.date-group').forEach(group=>{
         const groupItems=group.querySelectorAll('.report-item');
