@@ -25,10 +25,16 @@
     if (ft) ft.textContent = '最近更新：' + y + '-' + m + '-' + d + ' ' + hh + ':' + mm;
   }
 
-  /* ---------- 2. 报告生成状态（基于时段推断） ---------- */
+  /* ---------- 2. 报告生成状态（基于时段推断，UTC+8 校正 P3-2） ---------- */
   function updateReportStatus() {
+    /* Date.getHours() 取的是本地时区；部署在 GitHub Pages 走的是 UTC。
+       为保证所有时区用户看到的"早 8 / 午 12 / 晚 20"统一是北京时间，
+       显式按 UTC+8 偏移计算小时。 */
     const now = new Date();
-    const hour = now.getHours();
+    const beijingMs = now.getTime() + (now.getTimezoneOffset() + 8 * 60) * 60 * 1000;
+    const beijing = new Date(beijingMs);
+    const hour = beijing.getUTCHours();
+
     const metas = {
       morning: { readyAfter: 8,  label: '晨报 · 08:00' },
       noon:    { readyAfter: 12, label: '午报 · 12:00' },
