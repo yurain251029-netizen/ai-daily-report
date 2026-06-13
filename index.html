@@ -65,6 +65,11 @@
 }
 </script>
 
+<!-- 国际化版本占位（未来 EN 版预留） -->
+<link rel="alternate" hreflang="zh-CN" href="https://yurain251029-netizen.github.io/ai-daily-report/">
+<link rel="alternate" hreflang="en" href="https://yurain251029-netizen.github.io/ai-daily-report/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://yurain251029-netizen.github.io/ai-daily-report/">
+
 <!-- 预加载关键 CSS -->
 <link rel="preload" href="assets/css/site.css" as="style">
 <link rel="stylesheet" href="assets/css/site.css">
@@ -75,31 +80,37 @@
 </head>
 <body>
 
+<!-- 跳到正文链接（无障碍，键盘用户 1 键直达） -->
+<a class="skip-link" href="#hero">跳到正文</a>
+
 <!-- 装饰层：径向晕染 + 极淡噪点 -->
 <div class="bg-layer"></div>
 <div class="bg-noise"></div>
 
 <!-- ========== 顶部 Header ========== -->
-<header class="site-header">
+<header class="site-header" role="banner">
   <div class="header-inner">
     <div class="brand">
-      <div class="brand-mark">AI<span class="mark-x">×</span>经济</div>
-      <div class="brand-sub">DAILY · 3 REPORTS / DAY</div>
+      <div class="brand-mark" aria-label="AI 乘以 经济">AI<span class="mark-x" aria-hidden="true">×</span>经济</div>
+      <div class="brand-sub" aria-hidden="true">DAILY · 3 REPORTS / DAY</div>
     </div>
-    <div class="date-stamp" id="dateStamp">📅 加载中...</div>
+    <div class="date-stamp" id="dateStamp" aria-label="当前日期">
+      <span class="sr-only">今天是 </span>📅 加载中...
+    </div>
   </div>
 </header>
 
-<!-- 全局版块剪影（跟随滚动切换） -->
+<!-- 全局版块剪影（跟随滚动切换，纯装饰） -->
 <div class="global-silhouette" id="globalSilhouette" aria-hidden="true">
   <span class="silhouette-text" id="silhouetteText">AI × 经济日报</span>
 </div>
 
 <!-- ========== 第 1 屏 Hero ========== -->
-<section class="hero">
+<main>
+<section class="hero" id="hero" aria-labelledby="heroTitle">
   <div class="hero-inner">
     <h1 class="hero-title" id="heroTitle" data-text="AI × 经济  日报">
-      <span class="title-line1">AI <span class="title-x">×</span> 经济</span>
+      <span class="title-line1">AI <span class="title-x" aria-hidden="true">×</span> 经济</span>
       <span class="title-line2">日报</span>
     </h1>
     <p class="hero-tagline">AI 科技 × 经济金融 · 每日 3 报 · 中英双语</p>
@@ -112,30 +123,30 @@
 </section>
 
 <!-- ========== 第 2 屏 今日 3 报 ========== -->
-<section class="reports">
+<section class="reports" id="reports" aria-labelledby="reportsTitle">
   <div class="section-head">
-    <h2 class="section-title">今日 3 报</h2>
+    <h2 class="section-title" id="reportsTitle">今日 3 报</h2>
     <p class="section-sub">早 08:00 · 午 12:00 · 晚 20:00 · 北京时间</p>
   </div>
 
-  <div class="report-grid">
+  <div class="report-grid" role="list">
 
-    <a class="report-card" href="reports/index.html">
-      <div class="card-tag">🌅 晨报</div>
+    <a class="report-card" href="reports/index.html" role="listitem" aria-label="🌅 晨报：隔夜国际 + 早间国内 + 开盘前瞻，生成于 08:00">
+      <div class="card-tag" aria-hidden="true">🌅 晨报</div>
       <h3 class="card-title">隔夜国际 + 早间国内 + 开盘前瞻</h3>
       <p class="card-desc">覆盖美股收盘、美联储动向、亚洲早盘、A 股开盘前关键看点。</p>
       <div class="card-meta" data-report="morning">生成于 08:00</div>
     </a>
 
-    <a class="report-card" href="reports/index.html">
-      <div class="card-tag">☀️ 午报</div>
+    <a class="report-card" href="reports/index.html" role="listitem" aria-label="☀️ 午报：上午 A 股 + 半天 AI 速递 + 美股期货，生成于 12:00">
+      <div class="card-tag" aria-hidden="true">☀️ 午报</div>
       <h3 class="card-title">上午 A 股 + 半天 AI 速递 + 美股期货</h3>
       <p class="card-desc">A 股上午盘复盘、板块轮动、AI 行业半天速递、美股期货盘前信号。</p>
       <div class="card-meta" data-report="noon">生成于 12:00</div>
     </a>
 
-    <a class="report-card report-card-featured" href="reports/index.html">
-      <div class="card-tag">🌙 晚报</div>
+    <a class="report-card report-card-featured" href="reports/index.html" role="listitem" aria-label="🌙 晚报：全天总结 + A 股复盘 + 欧美盘前 + 深度分析，生成于 20:00">
+      <div class="card-tag" aria-hidden="true">🌙 晚报</div>
       <h3 class="card-title">全天总结 + A 股复盘 + 欧美盘前 + 深度分析</h3>
       <p class="card-desc">全天信息密度最高的一期，含 3-4 条深度分析，覆盖板块热力与明日展望。</p>
       <div class="card-meta" data-report="evening">生成于 20:00</div>
@@ -149,31 +160,31 @@
 </section>
 
 <!-- ========== 第 3 屏 关于 ========== -->
-<section class="about">
+<section class="about" id="about" aria-labelledby="aboutTitle">
   <div class="about-inner">
-    <h2 class="section-title">关于本站</h2>
+    <h2 class="section-title" id="aboutTitle">关于本站</h2>
     <div class="about-grid">
 
       <div class="about-item">
-        <div class="about-num">3</div>
+        <div class="about-num" aria-hidden="true">3</div>
         <div class="about-label">每日报告</div>
         <div class="about-desc">早 / 午 / 晚三报，覆盖全天财经节奏</div>
       </div>
 
       <div class="about-item">
-        <div class="about-num">15-20</div>
+        <div class="about-num" aria-hidden="true">15-20</div>
         <div class="about-label">条速览</div>
         <div class="about-desc">每报速览密度，3-4 条深度分析</div>
       </div>
 
       <div class="about-item">
-        <div class="about-num">中英</div>
+        <div class="about-num" aria-hidden="true">中英</div>
         <div class="about-label">双语</div>
         <div class="about-desc">关键术语双语对照，小白友好</div>
       </div>
 
       <div class="about-item">
-        <div class="about-num">涨跌</div>
+        <div class="about-num" aria-hidden="true">涨跌</div>
         <div class="about-label">一眼分明</div>
         <div class="about-desc">中国惯例：涨红跌绿，一目了然</div>
       </div>
@@ -185,9 +196,10 @@
     </div>
   </div>
 </section>
+</main>
 
 <!-- ========== Footer ========== -->
-<footer class="paper-footer">
+<footer class="paper-footer" role="contentinfo">
   <div class="footer-inner">
 
     <!-- 站点品牌 -->

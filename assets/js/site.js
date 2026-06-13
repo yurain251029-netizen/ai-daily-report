@@ -88,8 +88,14 @@
     const targets = document.querySelectorAll(
       '.section-head, .report-card, .about-item, .paper-footer .footer-line'
     );
-    
+
     if (!targets.length) return;
+
+    /* 无障碍：reduced-motion 时直接全部显示，不走 IntersectionObserver */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      targets.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
 
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
