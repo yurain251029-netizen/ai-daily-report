@@ -225,6 +225,17 @@
     if (!prefersReduced) {
       breatheRAF = requestAnimationFrame(breathe);
     }
+
+    /* 后台标签页暂停呼吸，切回时恢复 */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        if (breatheRAF) { cancelAnimationFrame(breatheRAF); breatheRAF = null; }
+      } else {
+        if (!breatheRAF && !prefersReduced && currentSection) {
+          breatheRAF = requestAnimationFrame(breathe);
+        }
+      }
+    });
   }
 
   if (document.readyState === 'loading') {

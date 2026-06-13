@@ -181,8 +181,6 @@ section, header, footer {
   .global-silhouette .silhouette-text {
     font-size: 60px;
     letter-spacing: 6px;
-  }
-  .global-silhouette .silhouette-text {
     transition: opacity 0.2s ease;
   }
 }
@@ -266,6 +264,7 @@ section, header, footer {
   border-color: #6f5638;
   transform: translateY(-1px);
   box-shadow: var(--shadow-warm);
+  will-change: transform;
 }
 
 .btn-ghost {
@@ -278,6 +277,7 @@ section, header, footer {
   background: var(--color-primary);
   color: #ffffff;
   transform: translateY(-1px);
+  will-change: transform;
 }
 
 /* ==========================================================
@@ -350,6 +350,7 @@ section, header, footer {
   padding-left: 21px;
   box-shadow: var(--shadow-warm);
   transform: translateY(-1px);
+  will-change: transform, box-shadow;
 }
 
 .report-card-featured {
@@ -732,21 +733,13 @@ html {
 .about-item:nth-child(3) { transition-delay: 0.2s; }
 .about-item:nth-child(4) { transition-delay: 0.3s; }
 
-/* GPU 加速优化 */
-.hero-title,
-.report-card,
-.btn-primary,
-.btn-ghost {
+/* GPU 加速优化（仅对频繁动画元素永久保留） */
+.hero-title {
   will-change: transform, opacity;
   transform: translateZ(0);
 }
 
-/* 性能优化：减少重绘 */
-.bg-layer,
-.bg-noise {
-  will-change: transform;
-  transform: translateZ(0);
-}
+/* 其余元素 will-change 已在 :hover 伪类中按需声明，避免永久占用 GPU 内存 */
 
 /* 移动端优化：减少动画 */
 @media (max-width: 600px) {
