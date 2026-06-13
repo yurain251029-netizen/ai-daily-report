@@ -142,22 +142,22 @@ section, header, footer {
 }
 
 /* ==========================================================
-   Hero 大字剪影（滚动驱动视差）
+   全局版块剪影（fixed 层，跟随 section 切换 + 字重呼吸）
    ========================================================== */
-.hero-silhouette {
-  position: absolute;
+.global-silhouette {
+  position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.04;
+  opacity: 0;
   transform: scale(1);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: transform, opacity;
 }
 
-.silhouette-text {
+.global-silhouette .silhouette-text {
   font-family: var(--font-serif);
   font-size: 180px;
   font-weight: 700;
@@ -166,19 +166,24 @@ section, header, footer {
   white-space: nowrap;
   user-select: none;
   line-height: 1;
+  opacity: 1;
+  transition: opacity 0.35s ease;
 }
 
 /* 响应式：剪影字体缩放 */
 @media (max-width: 1100px) {
-  .silhouette-text {
+  .global-silhouette .silhouette-text {
     font-size: 120px;
   }
 }
 
 @media (max-width: 600px) {
-  .silhouette-text {
+  .global-silhouette .silhouette-text {
     font-size: 60px;
     letter-spacing: 6px;
+  }
+  .global-silhouette .silhouette-text {
+    transition: opacity 0.2s ease;
   }
 }
 
@@ -687,6 +692,8 @@ section, header, footer {
   .hero-title::before,
   .hero-title::after { display: none; }
   .hero-title.glitch-active { animation: none; }
+  .global-silhouette { transition: none; }
+  .global-silhouette .silhouette-text { transition: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 

@@ -58,7 +58,7 @@
     setInterval(updateDate, 60 * 1000);
     initGlitch();
     initScrollReveal();
-    initSilhouetteParallax(); /* 初始化剪影视差 */
+    initSilhouetteTracker(); /* 初始化版块剪影（A: 版块接力 + D: 字重呼吸） */
   }
 
   /* ---------- 3. Hero 标题故障动画（hover 触发） ---------- */
@@ -108,44 +108,123 @@
     });
   }
 
-  /* ========== 5. Hero 剪影视差（滚动驱动）========== */
-  function initSilhouetteParallax() {
-    const silhouette = document.getElementById('heroSilhouette');
-    if (!silhouette) return;
+  /* ========== 5. 全局版块剪影（A: 版块接力 + D: 字重呼吸）========== */
+  function initSilhouetteTracker() {
+    var silhouette = document.getElementById('globalSilhouette');
+    var textEl = document.getElementById('silhouetteText');
+    if (!silhouette || !textEl) { return; }
 
-    let ticking = false;
+    /* 无障碍检测 */
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function updateSilhouette() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
-      
-      /* 计算滚动进度 (0 到 1) */
-      const progress = Math.min(scrollY / windowHeight, 1);
-      
-      /* 缩放：从 1 缩放到 0.5 */
-      const scale = 1 - progress * 0.5;
-      
-      /* 透明度：从 0.04 降到 0 */
-      const opacity = 0.04 * (1 - progress);
-      
-      /* 应用变换 */
-      silhouette.style.transform = 'scale(' + scale + ')';
-      silhouette.style.opacity = opacity;
-      
-      ticking = false;
+    /* 版块定义（按页面顺序） */
+    var sections = [
+      { el: document.querySelector('.hero'),    text: 'AI × 经济日报' },
+      { el: document.querySelector('.reports'), text: '每日三报'       },
+      { el: document.querySelector('.about'),   text: 'AI × ECONOMY'  }
+    ].filter(function (s) { return s.el; });
+
+    if (!sections.length) { return; }
+
+    var currentSection = sections[0];
+    var currentText     = sections[0].text;
+    var breatheRAF      = null;
+    var transitionTimer = null;
+    var sectionRatios   = new Map(); /* IntersectionObserver 记录各 section 可见率 */
+
+    /* ---------- 文字淡入淡出切换 ---------- */
+    function setText(newText) {
+      if (newText === currentText) { return; }
+      currentText = newText;
+
+      if (transitionTimer) { clearTimeout(transitionTimer); }
+
+      var duration = prefersReduced ? 0 : 180;
+      textEl.style.transition = prefersReduced ? 'none' : 'opacity 0.35s ease';
+      textEl.style.opacity = '0';
+
+      transitionTimer = setTimeout(function () {
+        textEl.textContent = newText;
+        textEl.style.opacity = '1';
+        transitionTimer = null;
+      }, duration);
     }
 
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(updateSilhouette);
-        ticking = true;
+    /* ---------- 字重呼吸：scale 正弦微振 ---------- */
+    function getScrollRatio(sectionEl) {
+      var rect   = sectionEl.getBoundingClientRect();
+      var viewH  = window.innerHeight;
+      if (rect.height <= 0) { return 0.5; }
+      /* 版块中心相对于视口中心的偏离度 → 0..1 */
+      var center = rect.top + rect.height / 2;
+      var ratio  = 1 - (center / viewH);
+      return Math.max(0, Math.min(1, ratio));
+    }
+
+    function breathe() {
+      if (!currentSection || prefersReduced) {
+        breatheRAF = null;
+        return;
       }
+      var r  = getScrollRatio(currentSection.el);
+      /* scale 在 0.985 ↔ 1.015 之间正弦呼吸 */
+      var bs = 1 + Math.sin(r * Math.PI) * 0.015;
+      silhouette.style.transform = 'scale(' + bs.toFixed(4) + ')';
+      breatheRAF = requestAnimationFrame(breathe);
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    
+    /* ---------- IntersectionObserver：检测最可见版块 ---------- */
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        sectionRatios.set(entry.target, entry.intersectionRatio);
+      });
+
+      /* 找出可见率最高的 section */
+      var bestTarget = null;
+      var bestRatio  = 0;
+      sectionRatios.forEach(function (ratio, target) {
+        if (ratio > bestRatio) { bestRatio = ratio; bestTarget = target; }
+      });
+
+      /* 阈值 0.15：section 可见度 >15% 才切换 */
+      if (bestTarget && bestRatio > 0.15) {
+        var match = null;
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el === bestTarget) { match = sections[i]; break; }
+        }
+        if (match) {
+          currentSection = match;
+          setText(match.text);
+          silhouette.style.opacity = '0.04';
+
+          if (!breatheRAF && !prefersReduced) {
+            breatheRAF = requestAnimationFrame(breathe);
+          }
+        }
+      } else {
+        /* 无版块明显可见 → 渐隐 */
+        silhouette.style.opacity = '0';
+        if (breatheRAF) {
+          cancelAnimationFrame(breatheRAF);
+          breatheRAF = null;
+        }
+      }
+    }, {
+      threshold: [0, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+    });
+
+    /* 观察所有版块 */
+    sections.forEach(function (s) { observer.observe(s.el); });
+
     /* 初始状态 */
-    updateSilhouette();
+    silhouette.style.opacity = '0.04';
+    silhouette.style.transform = 'scale(1)';
+    textEl.textContent = currentText;
+    textEl.style.opacity = '1';
+
+    if (!prefersReduced) {
+      breatheRAF = requestAnimationFrame(breathe);
+    }
   }
 
   if (document.readyState === 'loading') {
