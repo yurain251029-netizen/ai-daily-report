@@ -58,6 +58,7 @@
     setInterval(updateDate, 60 * 1000);
     initGlitch();
     initScrollReveal();
+    initSilhouetteParallax(); /* 初始化剪影视差 */
   }
 
   /* ---------- 3. Hero 标题故障动画（hover 触发） ---------- */
@@ -105,6 +106,46 @@
     targets.forEach(function (el) {
       observer.observe(el);
     });
+  }
+
+  /* ========== 5. Hero 剪影视差（滚动驱动）========== */
+  function initSilhouetteParallax() {
+    const silhouette = document.getElementById('heroSilhouette');
+    if (!silhouette) return;
+
+    let ticking = false;
+
+    function updateSilhouette() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      
+      /* 计算滚动进度 (0 到 1) */
+      const progress = Math.min(scrollY / windowHeight, 1);
+      
+      /* 缩放：从 1 缩放到 0.5 */
+      const scale = 1 - progress * 0.5;
+      
+      /* 透明度：从 0.04 降到 0 */
+      const opacity = 0.04 * (1 - progress);
+      
+      /* 应用变换 */
+      silhouette.style.transform = 'scale(' + scale + ')';
+      silhouette.style.opacity = opacity;
+      
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateSilhouette);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    /* 初始状态 */
+    updateSilhouette();
   }
 
   if (document.readyState === 'loading') {

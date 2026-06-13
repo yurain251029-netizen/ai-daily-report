@@ -136,11 +136,57 @@ section, header, footer {
 .hero {
   padding: 80px 24px 60px;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden; /* 确保剪影不会溢出 */
+}
+
+/* ==========================================================
+   Hero 大字剪影（滚动驱动视差）
+   ========================================================== */
+.hero-silhouette {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.silhouette-text {
+  font-family: var(--font-serif);
+  font-size: 180px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 12px;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+/* 响应式：剪影字体缩放 */
+@media (max-width: 1100px) {
+  .silhouette-text {
+    font-size: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .silhouette-text {
+    font-size: 60px;
+    letter-spacing: 6px;
+  }
 }
 
 .hero-inner {
   max-width: 780px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-title {
@@ -787,6 +833,16 @@ html {
   font-size: 14px;
   color: var(--color-primary);
   font-weight: 600;
+}
+
+.contact-svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+
+.contact-item:hover .contact-svg {
+  color: var(--color-accent);
 }
 
 .footer-tech {
