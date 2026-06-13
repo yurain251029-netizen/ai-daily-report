@@ -67,6 +67,7 @@
     initSilhouetteTracker(); /* 初始化版块剪影（A: 版块接力 + D: 字重呼吸） */
     initBackToTop();         /* P4-3 返回顶部 */
     initKeyboardShortcuts(); /* P4-5 键盘快捷键 */
+    initPageTransition();    /* 页面跳转淡出淡入 */
   }
 
   /* ---------- 6. Service Worker 注册（P4-1 离线缓存） ---------- */
@@ -155,6 +156,40 @@
         case '?': e.preventDefault(); helpVisible ? hideHelp() : showHelp(); break;
         case 'Escape': if (helpVisible) { e.preventDefault(); hideHelp(); } break;
       }
+    });
+  }
+
+  /* ---------- 9. 页面跳转过渡（点击带 data-transition 的链接 → 淡出 → 跳转 → 新页淡入）---------- */
+  function initPageTransition() {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* 进场：DOM 解析后下一帧移除 .page-entering，触发 opacity 0→1 淡入 */
+    if (document.documentElement.classList.contains('page-entering') && !prefersReduced) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.classList.remove('page-entering');
+        });
+      });
+    } else {
+      /* reduced-motion 或无标记：直接确保可见 */
+      document.documentElement.classList.remove('page-entering');
+    }
+
+    /* 离场：拦截普通左键点击 [data-transition] 链接 → 淡出 0.22s → 跳转 */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[data-transition]');
+      if (!a) return;
+      if (e.button !== 0) return;                                    /* 非左键放行 */
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; /* 修饰键放行 */
+      if (a.target === '_blank') return;                             /* 新标签放行 */
+      var url;
+      try { url = new URL(a.href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;                    /* 跨域放行 */
+
+      e.preventDefault();
+      if (prefersReduced) { location.href = a.href; return; }
+      document.documentElement.classList.add('page-leaving');
+      setTimeout(function () { location.href = a.href; }, 220);
     });
   }
 

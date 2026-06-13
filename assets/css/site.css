@@ -1145,3 +1145,18 @@ html {
   .error-404-card { padding: 32px 24px; }
 }
 
+/* ==========================================================
+   页面过渡（点击链接 → 淡出 → 跳转 → 新页淡入）
+   - 用 opacity 过渡，零网络成本
+   - 由 [data-transition] 触发，修饰键/中键/右键自动放行
+   - 兼容 prefers-reduced-motion
+   ========================================================== */
+html { opacity: 1; transition: opacity 0.22s ease; }
+html.page-leaving { opacity: 0; pointer-events: none; }
+html.page-entering { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  html { transition: none; }
+  html.page-leaving,
+  html.page-entering { opacity: 1; }
+}
+
