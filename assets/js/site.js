@@ -73,7 +73,7 @@
   /* ---------- 6. Service Worker 注册（P4-1 离线缓存） ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('/ai-daily-report/sw.js').catch(function (err) {
+      navigator.serviceWorker.register('/daily/sw.js').catch(function (err) {
         console.debug('[SW] skip:', err && err.message);
       });
     });

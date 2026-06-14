@@ -8,7 +8,7 @@
  * 更新：升级时修改 CACHE_NAME 即可触发后台更新
  */
 
-const CACHE_NAME = 'ai-daily-report-v1';
+const CACHE_NAME = 'ai-daily-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
